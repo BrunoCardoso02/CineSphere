@@ -5,29 +5,32 @@ export default {
   async createUser(request: Request, response: Response) {
     try {
       const { name, email, password } = request.body;
-      const userExisting = await prisma.user.findUnique({ where: email });
+      const userExisting = await prisma.user.findUnique({ where: { email } });
       if (userExisting) {
-        return response.json({
+        return response.status(400).json({
           error: true,
           message: 'Email já cadastrado!'
         });
-      };
+      }
       const userCreated = await prisma.user.create({ 
         data: {
           name,
           email,
           password
         }
-       })
+      });
 
-       return response.json({
+      return response.json({
         error: false,
-        message: 'Usuário Cadastrado!!!'
-       })
+        message: 'Usuário Cadastrado!!!',
+        userCreated
+      });
     } catch (err) {
       return response.json({
-        message: err
-      })
+        error: true,
+        message: 'Erro ao cadastrar usuário',
+        details: err.message
+      });
     }
   }
 }
