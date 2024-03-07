@@ -32,5 +32,27 @@ export default {
         details: err.message
       });
     }
-  }
+  },
+
+  async getUser(request: Request, response: Response) {
+    try {
+        const users = await prisma.user.findMany();
+        if (!users) {
+            return response.status(400).json({
+                error: true,
+                message: "Não há usuários cadastrados"
+            });
+        }
+
+        return response.json({
+            users
+        });
+    } catch (err) {
+        return response.status(400).json({
+            error: true,
+            message: "Ocorreu algum erro na listagem!",
+            details: err.message
+        });
+    }
+}
 }
