@@ -26,13 +26,12 @@ export default {
         }
       });
 
-      return response.json({
-        error: false,
+      return response.status(201).json({
         message: 'Usuário Cadastrado!!!',
         userCreated
       });
     } catch (err) {
-      return response.json({
+      return response.status(500).json({
         error: true,
         message: 'Erro ao cadastrar usuário',
         details: err.message
@@ -40,7 +39,7 @@ export default {
     }
   },
 
-  async getUser(request: Request, response: Response) { // Adicione 'request' como primeiro parâmetro
+  async getUser(request: Request, response: Response) { 
     try {
         const users = await prisma.user.findMany();
         if (!users) {
@@ -50,11 +49,11 @@ export default {
             });
         }
 
-        return response.json({
+        return response.status(200).json({
             users
         });
     } catch (err) {
-        return response.status(400).json({
+        return response.status(500).json({
             error: true,
             message: "Ocorreu algum erro na listagem!",
             details: err.message
