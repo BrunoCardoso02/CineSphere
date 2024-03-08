@@ -36,7 +36,7 @@ export default {
     async getMovies(request: Request, response: Response){
         try{
             const movies = await prisma.movie.findMany();
-            if (!movies){
+            if (movies.length <= 0){
                 return response.status(400).json({
                     message: "Não há filmes cadastrados",
                 })
@@ -46,7 +46,25 @@ export default {
             })
         }catch(err){
             return response.json({
-                error: true,
+                message: err.message
+            })
+        }
+    },
+    async deleteMovie(request: Request, response: Response){
+        try{
+            const {id} = request.params;
+            const movieDeleted = await prisma.movie.delete({where: {id: Number(id)}})
+            const existingMovie = await prisma.movie.findUnique({where: {id: Number(id)}});
+            if (!existingMovie) {
+                return response.json(400).json({
+                    message: "Não há nenhum filme com esse id"
+                });
+            };
+            return response.json({
+                movieDeleted
+            })
+        } catch(err){
+            return response.status(400).json({
                 message: err.message
             })
         }
