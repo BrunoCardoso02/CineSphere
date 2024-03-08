@@ -34,7 +34,7 @@ export default {
     }
   },
 
-  async getUser(request: Request, response: Response) {
+  async getUser(request: Request, response: Response) { // Adicione 'request' como primeiro parâmetro
     try {
         const users = await prisma.user.findMany();
         if (!users) {
@@ -54,5 +54,5 @@ export default {
             details: err.message
         });
     }
-}
+  }
 }
