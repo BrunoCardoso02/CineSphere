@@ -1,10 +1,16 @@
 import { Request, Response } from "express";
 import { prisma } from "../database";
 
+interface User {
+  name: string,
+  email: string,
+  password: string
+}
+
 export default {
   async createUser(request: Request, response: Response) {
     try {
-      const { name, email, password } = request.body;
+      const { name, email, password } = request.body as User;
       const userExisting = await prisma.user.findUnique({ where: { email } });
       if (userExisting) {
         return response.status(400).json({

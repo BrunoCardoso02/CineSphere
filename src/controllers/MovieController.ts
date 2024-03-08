@@ -1,9 +1,15 @@
-import {Request, Response} from 'express'
-import { prisma } from '../database'
+import {Request, Response} from 'express';
+import { prisma } from '../database';
+
+interface Movie {
+    title: string,
+    sinopse: string,
+    image: string
+}
 export default {
     async createMovie(request: Request , response: Response){
         try{
-            const {title, sinopse, image} = request.body;
+            const {title, sinopse, image} = request.body as Movie;
             const existingMovie = await prisma.movie.findUnique({where: {image, title}});
             if(existingMovie) {
                 return response.status(400).json({
