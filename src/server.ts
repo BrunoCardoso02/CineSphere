@@ -2,6 +2,7 @@
 import Express from 'express';
 import userRouter from './routes/UserRoute';
 import movieRouter from './routes/MovieRoute';
+
 const app = Express();
 const port = 3000;
 

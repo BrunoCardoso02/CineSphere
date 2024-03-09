@@ -1,7 +1,7 @@
 import { Router } from "express";
 import MovieController from "../controllers/MovieController";
 
-const movieRouter = Router();
+const movieRouter:Router = Router();
 
 movieRouter.post('/createMovie', MovieController.createMovie);
 movieRouter.get('/movies', MovieController.getMovies);

@@ -1,7 +1,8 @@
 // UserRouter.ts
 import { Router } from 'express';
 import UserController from '../controllers/UserController';
-const userRouter = Router();
+
+const userRouter: Router = Router();
 
 userRouter.post('/createUser', UserController.createUser);
 userRouter.get('/users', UserController.getUser);
