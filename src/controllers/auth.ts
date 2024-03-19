@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { prisma } from '../database';
-import {hashSync, compareSync} from 'bcrypt';
+import { hashSync, compareSync} from 'bcrypt'
 import * as jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../secrets';
 
